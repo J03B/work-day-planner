@@ -57,3 +57,12 @@ textarea {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
 }
+
+/* alert hidden by default - will add class ".show-alert" when needed in script.js */
+.alert {
+  display: none;
+}
+
+.show-alert {
+  display: block;
+}
