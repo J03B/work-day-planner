@@ -16,12 +16,30 @@ $(document).ready(function () {
 
   // function for updating if a time block is past, present, or future
   function pastPresentFuture() {
+    let curHour = dayjs().hour();
+    console.log("Refresh past, present, and future");
     // loop over time blocks then check time and validate
+    $('.time-block').each(function() {
+      var secHour = parseInt($(this).attr('id').split('-')[1]);
+      if (curHour > secHour) {
+        $(this).removeClass('future');    // remove the extra classes in case there
+        $(this).removeClass('present');   // are proactive time block updates that
+        $(this).addClass('past');
+      } else if (curHour == secHour) {
+        $(this).removeClass('future');    // are done in the setInterval after this
+        $(this).removeClass('past');      // function is defined
+        $(this).addClass('present');
+      } else {
+        $(this).removeClass('past');
+        $(this).removeClass('present');
+        $(this).addClass('future')
+      }
+    });
   }
 
   // once the page renders, and proactively, update the time blocks
   pastPresentFuture();
-  setInterval(pastPresentFuture, 10000);
+  setInterval(pastPresentFuture, 60000);  // refreshes time block classes every minute
 
   // Load localStorage data for each hour block
   for (let i = 0; i < $('.container-lg').children().length; i++) {
